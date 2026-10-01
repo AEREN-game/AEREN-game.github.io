@@ -3,91 +3,878 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>AEREN: Chronicles of the Abyss</title>
+  <meta
+    name="description"
+    content="Official website of AEREN: Chronicles of the Abyss."
+  >
+
+  <link rel="icon" type="image/png" href="AEREN-avatar-GitHub.png">
+
   <style>
-    body {
+    :root {
+      --bg: #0d2927;
+      --bg-dark: #081b1a;
+      --surface: #123532;
+      --surface-light: #173e3a;
+
+      --gold: #d5b56f;
+      --gold-light: #f0dda4;
+
+      --green: #9fc382;
+
+      --text: #f4f0e7;
+      --muted: #b9c3bc;
+
+      --border: rgba(213, 181, 111, 0.22);
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b0b0f;
-      color: white;
-      text-align: center;
+      padding: 0;
     }
 
-    header {
-      padding: 100px 20px;
-      background: linear-gradient(#11131a, #0b0b0f);
+    html {
+      scroll-behavior: smooth;
     }
 
-    h1 {
-      font-size: 48px;
-      margin-bottom: 10px;
+    body {
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background: var(--bg-dark);
+      color: var(--text);
+      line-height: 1.6;
     }
 
-    p {
-      color: #b9b9c5;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* NAVIGATION */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      background: rgba(8, 27, 26, 0.96);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 14px 24px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold-light);
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 82vh;
+      display: flex;
+      align-items: center;
+
+      background:
+        radial-gradient(
+          circle at 70% 30%,
+          rgba(159, 195, 130, 0.09),
+          transparent 34%
+        ),
+        linear-gradient(
+          180deg,
+          #0d2927 0%,
+          #081b1a 100%
+        );
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-container {
+      max-width: var(--max-width);
+      width: 100%;
+      margin: 0 auto;
+      padding: 80px 24px;
+
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 70px;
+    }
+
+    .hero-text .eyebrow {
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero-text h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--gold-light);
+
+      font-size: clamp(48px, 7vw, 86px);
+      line-height: 0.96;
+      font-weight: 700;
+
+      margin-bottom: 18px;
+    }
+
+    .hero-text h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--gold);
+
+      font-size: clamp(18px, 2.4vw, 28px);
+      font-weight: 400;
+      letter-spacing: 0.16em;
+
+      margin-bottom: 28px;
+    }
+
+    .hero-text p {
+      max-width: 650px;
+
+      color: var(--muted);
       font-size: 18px;
+
+      margin-bottom: 34px;
     }
 
-    .buttons {
-      margin-top: 30px;
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
     }
 
     .btn {
-      display: inline-block;
-      margin: 10px;
-      padding: 14px 28px;
-      border-radius: 8px;
-      text-decoration: none;
-      color: white;
-      background: #7a5cff;
-      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 50px;
+      padding: 0 26px;
+
+      border-radius: 6px;
+
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
     }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #102723;
+      border: 1px solid var(--gold);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      background: transparent;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(213, 181, 111, 0.08);
+    }
+
+    .hero-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-logo img {
+      width: min(100%, 470px);
+    }
+
+    /* GENERIC SECTIONS */
 
     section {
-      padding: 70px 20px;
+      padding: 95px 24px;
     }
 
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      margin-bottom: 45px;
+    }
+
+    .section-heading span {
+      display: block;
+
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+
+      margin-bottom: 8px;
+    }
+
+    .section-heading h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--gold-light);
+
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.1;
+
+      margin-bottom: 14px;
+    }
+
+    .section-heading p {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    /* ABOUT */
+
+    .about {
+      background: var(--bg-dark);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+    }
+
+    .about-card {
+      padding: 34px;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .about-card h3 {
+      color: var(--gold-light);
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .about-card p {
+      color: var(--muted);
+    }
+
+    /* FEATURES */
+
+    .features {
+      background: var(--bg);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feature {
+      padding: 28px;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .feature-number {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+
+      margin-bottom: 12px;
+    }
+
+    .feature h3 {
+      color: var(--gold-light);
+      margin-bottom: 10px;
+      font-size: 19px;
+    }
+
+    .feature p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* NEWS */
+
+    .news {
+      background: var(--bg-dark);
+    }
+
+    .news-card {
+      padding: 34px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .news-card h3 {
+      color: var(--gold-light);
+      margin-bottom: 7px;
+    }
+
+    .news-card p {
+      color: var(--muted);
+    }
+
+    .news-date {
+      color: var(--green);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    /* DOWNLOAD */
+
+    .download {
+      background: var(--bg);
+    }
+
+    .download-box {
+      padding: 50px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .download-box h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--gold-light);
+
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .download-box p {
+      color: var(--muted);
+    }
+
+    .download-status {
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+
+      margin-bottom: 7px;
+    }
+
+    /* COMMUNITY */
+
+    .community {
+      text-align: center;
+      background: var(--bg-dark);
+    }
+
+    .community h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--gold-light);
+
+      font-size: clamp(34px, 5vw, 50px);
+      margin-bottom: 16px;
+    }
+
+    .community p {
+      color: var(--muted);
+      max-width: 620px;
+      margin: 0 auto 28px;
+    }
+
+    /* FOOTER */
+
     footer {
-      padding: 30px;
-      color: #777;
-      border-top: 1px solid #222;
+      border-top: 1px solid var(--border);
+      background: #061514;
+
+      padding: 34px 24px;
+    }
+
+    .footer-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+
+      color: #84938d;
+      font-size: 13px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold-light);
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 850px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-text p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-logo {
+        order: -1;
+      }
+
+      .hero-logo img {
+        width: min(100%, 360px);
+      }
+
+      .about-grid,
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .news-card,
+      .download-box {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 520px) {
+      section {
+        padding: 70px 20px;
+      }
+
+      .nav-container {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .nav-brand span {
+        display: none;
+      }
+
+      .hero-container {
+        padding: 55px 20px;
+      }
+
+      .download-box {
+        padding: 30px;
+      }
+
+      .footer-container {
+        flex-direction: column;
+        text-align: center;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<header>
-  <h1>AEREN</h1>
-  <h2>Chronicles of the Abyss</h2>
-  <p>Enter the Abyss. Discover its secrets.</p>
+  <!-- Navigation -->
 
-  <div class="buttons">
-    <a class="btn" href="#">Download Game</a>
-    <a class="btn" href="#">Join Discord</a>
-  </div>
-</header>
+  <nav class="navbar">
+    <div class="nav-container">
 
-<section>
-  <h2>About the Game</h2>
-  <p>
-    AEREN: Chronicles of the Abyss is a dark fantasy adventure
-    filled with exploration, mystery, combat and secrets.
-  </p>
-</section>
+      <a href="#" class="nav-brand">
+        <img src="AEREN-avatar-GitHub.png" alt="AEREN logo">
+        <span>AEREN</span>
+      </a>
 
-<section>
-  <h2>Features</h2>
-  <p>⚔ Combat &nbsp; 🌑 Dark World &nbsp; 📖 Story &nbsp; 👥 Community</p>
-</section>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#news">News</a>
+        <a href="#download">Download</a>
+        <a
+          href="https://discord.gg/zVNZAjPwex"
+          target="_blank"
+          rel="noopener"
+        >
+          Discord
+        </a>
+      </div>
 
-<section>
-  <h2>Download</h2>
-  <p>The game will be available here soon.</p>
-</section>
+    </div>
+  </nav>
 
-<footer>
-  © 2026 AEREN. All rights reserved.
-</footer>
+
+  <!-- Hero -->
+
+  <header class="hero">
+
+    <div class="hero-container">
+
+      <div class="hero-text">
+
+        <div class="eyebrow">
+          A new journey begins
+        </div>
+
+        <h1>AEREN</h1>
+
+        <h2>CHRONICLES OF THE ABYSS</h2>
+
+        <p>
+          Explore a mysterious world, uncover its secrets and
+          descend into the unknown in AEREN: Chronicles of the Abyss.
+        </p>
+
+        <div class="hero-buttons">
+
+          <a href="#download" class="btn btn-primary">
+            Download Game
+          </a>
+
+          <a
+            href="https://discord.gg/zVNZAjPwex"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-secondary"
+          >
+            Join Discord
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-logo">
+        <img
+          src="AEREN-logo-English.png"
+          alt="AEREN: Chronicles of the Abyss"
+        >
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- About -->
+
+  <section class="about" id="about">
+
+    <div class="container">
+
+      <div class="section-heading">
+        <span>About</span>
+
+        <h2>Enter the Abyss</h2>
+
+        <p>
+          AEREN: Chronicles of the Abyss is an upcoming game
+          focused on exploration, discovery and a mysterious
+          world waiting to be uncovered.
+        </p>
+      </div>
+
+
+      <div class="about-grid">
+
+        <div class="about-card">
+          <h3>Discover</h3>
+
+          <p>
+            Explore unfamiliar places, uncover hidden stories
+            and learn more about the world of AEREN.
+          </p>
+        </div>
+
+
+        <div class="about-card">
+          <h3>Explore</h3>
+
+          <p>
+            Journey deeper into the Abyss and discover what
+            lies beyond the known world.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Features -->
+
+  <section class="features" id="features">
+
+    <div class="container">
+
+      <div class="section-heading">
+        <span>The Game</span>
+        <h2>Features</h2>
+      </div>
+
+
+      <div class="feature-grid">
+
+        <div class="feature">
+          <div class="feature-number">01</div>
+          <h3>Exploration</h3>
+          <p>
+            Discover locations, secrets and stories throughout
+            the world.
+          </p>
+        </div>
+
+
+        <div class="feature">
+          <div class="feature-number">02</div>
+          <h3>Atmosphere</h3>
+          <p>
+            Experience a distinctive world built around mystery
+            and discovery.
+          </p>
+        </div>
+
+
+        <div class="feature">
+          <div class="feature-number">03</div>
+          <h3>Development</h3>
+          <p>
+            Follow the project as AEREN continues to grow,
+            evolve and expand.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- News -->
+
+  <section class="news" id="news">
+
+    <div class="container">
+
+      <div class="section-heading">
+        <span>Updates</span>
+        <h2>Latest News</h2>
+      </div>
+
+
+      <div class="news-card">
+
+        <div>
+          <h3>Welcome to the official AEREN website</h3>
+
+          <p>
+            Development updates and announcements will appear here.
+          </p>
+        </div>
+
+        <div class="news-date">
+          OCTOBER 2026
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Download -->
+
+  <section class="download" id="download">
+
+    <div class="container">
+
+      <div class="download-box">
+
+        <div>
+
+          <div class="download-status">
+            Coming Soon
+          </div>
+
+          <h2>Download AEREN</h2>
+
+          <p>
+            The first public version of AEREN will be available
+            here when it is ready.
+          </p>
+
+        </div>
+
+
+        <a
+          href="#"
+          class="btn btn-primary"
+          aria-disabled="true"
+        >
+          Coming Soon
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Discord -->
+
+  <section class="community">
+
+    <div class="container">
+
+      <h2>Join the Community</h2>
+
+      <p>
+        Join the official AEREN Discord server for news,
+        development updates, bug reports and community discussion.
+      </p>
+
+      <a
+        href="https://discord.gg/zVNZAjPwex"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-primary"
+      >
+        Join AEREN on Discord
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- Footer -->
+
+  <footer>
+
+    <div class="footer-container">
+
+      <div>
+        © 2026 AEREN. All rights reserved.
+      </div>
+
+      <div class="footer-links">
+
+        <a
+          href="https://discord.gg/zVNZAjPwex"
+          target="_blank"
+          rel="noopener"
+        >
+          Discord
+        </a>
+
+        <a href="#about">
+          About
+        </a>
+
+        <a href="#download">
+          Download
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
 
 </body>
 </html>

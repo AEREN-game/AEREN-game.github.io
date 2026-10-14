@@ -2,7 +2,7 @@
 
 ## Windows
 
-Download AEREN-1.0.0-Windows-x64.zip, extract the entire archive into a new folder and launch AEREN.exe. Do not run it from inside the ZIP.
+Download AEREN-1.0.1-Windows-x64.zip, extract the entire archive into a new folder and launch AEREN.exe. Do not run it from inside the ZIP.
 
 Requires Windows 10/11 x64, .NET Framework 4.6.2 or later, and Microsoft Edge WebView2 Runtime. The EXE is unsigned. Verify its source and SHA-256 checksum; do not disable system protections.
 

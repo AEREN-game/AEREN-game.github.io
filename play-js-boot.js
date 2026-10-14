@@ -1,8 +1,8 @@
 'use strict';
 // Profile schema numbers are independent from the public product version.
-window.AEREN_RELEASE={gameVersion:'1.0.0',saveSchemaVersion:3,contentVersion:'2026-10-13',buildId:'2026-10-13-rc3-en',channel:'release-candidate',development:false};
+window.AEREN_RELEASE={gameVersion:'1.0.1',saveSchemaVersion:3,contentVersion:'2026-10-13',buildId:'2026-10-14-release',channel:'stable',development:false};
 (function(){
- const keys=['aeren.save.v1','aeren.meta.v2','aeren.meta.v3','aeren.run.v2'],backup='aeren.backup.pre-1.0.0',journal='aeren.transaction.1',object=x=>x&&typeof x==='object'&&!Array.isArray(x);
+ const keys=['aeren.save.v1','aeren.meta.v2','aeren.meta.v3','aeren.run.v2'],backup='aeren.backup.pre-1.0.1',journal='aeren.transaction.1',object=x=>x&&typeof x==='object'&&!Array.isArray(x);
  const capture=()=>Object.fromEntries(keys.map(k=>[k,localStorage.getItem(k)]));
  const restore=values=>{for(const key of keys)values[key]===null||values[key]===undefined?localStorage.removeItem(key):localStorage.setItem(key,values[key]);};
  function validate(values){for(const [key,version]of keys.map((k,i)=>[k,[1,2,3,2][i]])){if(values[key]===null||values[key]===undefined)continue;const d=JSON.parse(values[key]);if(!object(d)||d.version!==version)throw Error('Nieobsługiwany lub uszkodzony format zapisu.');
@@ -34,4 +34,3 @@ window.AEREN_RELEASE={gameVersion:'1.0.0',saveSchemaVersion:3,contentVersion:'20
   const script=document.createElement('script');script.src=new URL('play-js-runtime.js',document.currentScript.src).href;script.onerror=recovery;document.body.append(script);
  }catch(e){recovery();}
 })();
-

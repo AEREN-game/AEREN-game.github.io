@@ -1,8 +1,8 @@
-# AEREN 1.0.0 RC3 — English distribution
+# AEREN 1.0.1 1.0.1 — English distribution
 
 - English showcase website, repository documentation and release description.
 - English screenshots captured from the actual game.
 - English defaults for new profiles; existing language preferences preserved.
-- Existing RC3 fixes: settings focus/scroll preservation, recovery/help messages, safe save handling and disabled unfinished auto-updater.
+- Existing 1.0.1 fixes: settings focus/scroll preservation, recovery/help messages, safe save handling and disabled unfinished auto-updater.
 
-The public version remains 1.0.0. The English distribution uses build 2026-10-13-rc3-en. Save schemas are unchanged. This is still a release candidate.
+The public version remains 1.0.1. The English distribution uses build 2026-10-14-release. Save schemas are unchanged. This is still a release candidate.

@@ -1,4 +1,4 @@
-AEREN 1.0.0 — component notices
+AEREN 1.0.1 — component notices
 
 Game code, procedural art, animation, icons, sound effects and music were created within the AEREN project. No external audio recordings or font files are bundled. Georgia, Arial and system-ui are provided by the operating system.
 

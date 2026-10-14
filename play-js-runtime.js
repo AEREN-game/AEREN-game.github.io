@@ -112,7 +112,7 @@ window.Aeren = {
 'use strict';
 (function(A){
   const D=A.Data;
-  D.version='1.0.0';
+  D.version='1.0.1';
   D.modes={
     easy:{name:'Łatwy',hp:.85,damage:.8,spawn:.8,speed:.94,xp:.85,gold:.8,loot:.85,reward:.8},
     normal:{name:'Średni',hp:1.15,damage:1,spawn:1,speed:1,xp:1,gold:1,loot:1,reward:1},
@@ -3582,7 +3582,7 @@ window.Aeren = {
 'use strict';
 (function(A){
  const {Data:D,Save:S,Controls:C,U}=A,G=A.Game.prototype,UI=A.UI.prototype;
- D.version='1.0.0';
+ D.version='1.0.1';
  C.rows.push(['secondary','Umiejętność pomocnicza','Mouse2'],['potion','Użyj mikstury','KeyV']);
  const saveLoad=S.load;S.load=function(){const d=saveLoad.call(this),bindings=d.settings.bindings||(d.settings.bindings={});for(const [id,defaultCode] of [['secondary','Mouse2'],['potion','KeyV']])if(!bindings[id]&&C.rows.some(row=>row[0]!==id&&C.key(row[0])===defaultCode)){bindings[id]=['KeyG','KeyH','KeyB','Digit5','Digit6','Digit7'].find(code=>!C.rows.some(row=>C.key(row[0])===code));}return d;};
  D.potions={small:{name:'Mała',heal:.15,color:'#aee9ad'},large:{name:'Duża',heal:.30,color:'#ffb5aa'},regen:{name:'Regeneracja',heal:.20,color:'#a3dff1'}};
@@ -3715,7 +3715,7 @@ window.Aeren = {
 'use strict';
 (function(A){
  const {Data:D,Save:S}=A,G=A.Game.prototype;
- D.version='1.0.0';
+ D.version='1.0.1';
  Object.assign(D.secondary.ilya,{desc:'Przeszywający promień w kierunku kursora.'});Object.assign(D.secondary.sol,{desc:'Stożek ognia odrzucający wrogów.'});Object.assign(D.secondary.niva,{desc:'Lodowy uskok i ślad spowalniający wrogów.'});Object.assign(D.secondary.orren,{desc:'Uderzenie, kontrola tłumu i krótka osłona.'});Object.assign(D.secondary.vesper,{desc:'Znak zwiększający obrażenia zwykłych ataków.'});
  const defaults=()=>({version:3,wallet:{silver:0,crystals:0,tokens:0},receipts:{},discovered:{},challenges:{},unlocks:{},starts:{},cosmetics:{},equipped:{},endgame:{}});
  const settingDefaults={hudLayout:'auto',hudSize:'medium',hudAlign:'center',hudOpacity:.94,lowHP:'subtle',weaponStats:true};
@@ -4062,12 +4062,12 @@ window.Aeren = {
  G.sliceRewardFactor=function(){const s=this.slice;return (this.mode.reward||1)*X.scale(s.rift).reward*(X.curses.find(c=>c.id===s.curse)?.reward||1)*(this.sliceHas('storm')?1.15:this.sliceHas('horde')?1.1:1);};
  const start=G.start;
  G.start=function(id,options={}){
-  if(options.slice&&!options.restoring&&(!['ilya','sol'].includes(id)||options.rift>X.readyRift||options.rift>X.meta().unlocked))return false;
-  if(options.slice&&options.rift>0)options={...options,mode:'normal'};const result=start.call(this,id,options);if(result===false||!options.slice)return result;
+  if(options.slice&&!options.restoring&&(!S.data.heroes.includes(id)||options.rift>X.readyRift||options.rift>X.meta().unlocked))return false;
+  const result=start.call(this,id,options);if(result===false||!options.slice)return result;
   const rift=U.clamp(Math.floor(options.rift||0),0,X.readyRift),curse=rift>=15&&X.curses.some(c=>c.id===options.curse)?options.curse:'none';
   this.player.slice24={version:1,rift,curse,start:X.starts.some(s=>s.id===options.modifier)?options.modifier:'normal',worldMods:X.worldFor(this.seed,rift),events:{},queue:[],choice:null,mutated:{},tutorial:{},firstUpgrade:null,miniTimes:[],phaseTimes:[],awards:0,evolutionDone:{},nextElite:rift>=2?90:120,nextBeat:60,lastCause:'Otchłań',gifts:[],risk:null};
   if(options.modifier==='storm'&&X.meta().milestones[5])this.slice.start='storm';
-  this.mission=0;this.biome=0;this.weapons=[{id:id==='ilya'?'bow':'staff',level:1,cd:0}];this.player.startWeaponId=this.weapons[0].id;
+  this.mission=0;this.biome=0;this.weapons=[{id:this.player.startWeaponId||this.player.hero.startWeapon,level:1,cd:0}];this.player.startWeaponId=this.weapons[0].id;
   this.player.ultCd=20;this.player.potions=curse==='noheal'?[]:['small'];this.player.nextXP=24;this.player.xp=0;
   if(this.slice.start==='fragile'&&curse!=='one')this.weapons.push({id:id==='ilya'?'staff':'bow',level:1,cd:0});
   this.world.events=this.world.events.filter(e=>['portal','chest','fountain'].includes(e.type));this.world.hazards=[];
@@ -5855,7 +5855,7 @@ window.Aeren = {
  };
  function node(n){if(!n.parentElement||n.parentElement.closest('script,style,[data-l10n-skip]'))return;const current=n.nodeValue,previous=nodes.get(n),raw=previous&&current===previous.translated?previous.raw:current,translated=L.text(raw);nodes.set(n,{raw,translated});if(current!==translated)n.nodeValue=translated;}
  function element(el){if(el.closest('[data-l10n-skip]'))return;let state=attrs.get(el);if(!state){state={};attrs.set(el,state);}for(const key of ['title','aria-label','placeholder','alt']){if(!el.hasAttribute(key))continue;const current=el.getAttribute(key),prev=state[key],raw=prev&&current===prev.translated?prev.raw:current,translated=L.text(raw);state[key]={raw,translated};if(current!==translated)el.setAttribute(key,translated);}}
- L.refresh=function(){scheduled=false;observer?.disconnect();try{const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;while(n=walker.nextNode())node(n);for(const el of document.querySelectorAll('[title],[aria-label],[placeholder],[alt]'))element(el);document.documentElement.lang=L.language();document.title=L.text('AEREN · Kroniki otchłani 1.0.0');}finally{observer?.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['title','aria-label','placeholder','alt']});}};
+ L.refresh=function(){scheduled=false;observer?.disconnect();try{const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;while(n=walker.nextNode())node(n);for(const el of document.querySelectorAll('[title],[aria-label],[placeholder],[alt]'))element(el);document.documentElement.lang=L.language();document.title=L.text('AEREN · Kroniki otchłani 1.0.1');}finally{observer?.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['title','aria-label','placeholder','alt']});}};
  L.set=function(lang){if(!['pl','en','de'].includes(lang))return false;S.data.settings.language=lang;S.write();cache.clear();L.refresh();return true;};
  const settings=P.settings;P.settings=function(...args){settings.apply(this,args);this.overlay.querySelector('.panelhead')?.insertAdjacentHTML('afterend',`<section class="language28"><h2>Język gry</h2><div class="actions" data-l10n-skip>${[['pl','Polski'],['en','English'],['de','Deutsch']].map(([id,label])=>`<button class="btn ${L.language()===id?'primary':''}" data-action="language28" data-value="${id}" aria-pressed="${L.language()===id}">${label}</button>`).join('')}</div></section>`);L.refresh();};
  // Option buttons rebuild the settings panel. Keep its scroll and keyboard focus.
@@ -7086,9 +7086,10 @@ odnowienie|cooldown|Abklingzeit
  const kill=G.kill;
  G.kill=function(enemy,...args){
   const result=kill.call(this,enemy,...args);
-  if(!this.training3&&this.roundCleared?.()&&!this.roundLootMagnet31)queueMicrotask(()=>{
-   if(this.roundLootMagnet31||!this.roundCleared?.()||this.enemies.some(e=>e.hp>0&&!e.dead))return;
-   this.roundLootMagnet31=`${this.biome}:${this.player?.run3?.depth||0}`;
+  const roundKey=`${this.player?.runId}:${this.biome}:${this.player?.run3?.depth||0}`;
+  if(!this.training3&&this.roundCleared?.()&&this.roundLootMagnet31!==roundKey)queueMicrotask(()=>{
+   if(this.roundLootMagnet31===roundKey||!this.roundCleared?.()||this.enemies.some(e=>e.hp>0&&!e.dead))return;
+   this.roundLootMagnet31=roundKey;
    let count=0;for(const pickup of this.pickups.active){pickup.magnet=true;count++;}
    if(count)this.ui.toast('Runda oczyszczona',`Przyciągnięto wszystkie zasoby z mapy · ${count}`);
    this.saveRun?.();
@@ -7250,7 +7251,7 @@ odnowienie|cooldown|Abklingzeit
 'use strict';
 (function(A){
  const S=A.Save,P=A.UI.prototype,G=A.Game.prototype,B=window.AEREN_RELEASE,K=window.AEREN_STORAGE;
- A.Build=B;A.Data.version=B.gameVersion;document.title='AEREN '+B.gameVersion+' Release Candidate';
+ A.Build=B;A.Data.version=B.gameVersion;document.title='AEREN '+B.gameVersion+' Release';
  A.Locale.add(`
 Po zdobyciu|On acquisition|Beim Erhalt
 Odblokowuje tę umiejętność.|Unlocks this ability.|Schaltet diese Fähigkeit frei.
@@ -7275,7 +7276,7 @@ Poprzedni zapis został zachowany. Sprawdź wolne miejsce.|The previous save was
 Wstrzymano grę z powodu błędu|Game paused because of an error|Spiel wegen eines Fehlers pausiert
 Zapisz raport diagnostyczny w ustawieniach.|Export a diagnostic report in Settings.|Exportiere einen Diagnosebericht in den Einstellungen.
 Raport diagnostyczny znajdziesz w ustawieniach.|A diagnostic report is available in Settings.|Ein Diagnosebericht ist in den Einstellungen verfügbar.
-To lokalne wydanie Release Candidate. Automatyczne aktualizacje nie są jeszcze udostępnione. Nową paczkę instaluj ręcznie; zapis pozostaje na tym komputerze.|This is a local Release Candidate. Automatic updates are not available yet. Install new packages manually; your save stays on this computer.|Dies ist ein lokaler Release Candidate. Automatische Updates sind noch nicht verfügbar. Installiere neue Pakete manuell; dein Spielstand bleibt auf diesem Computer.
+To lokalne wydanie Release. Automatyczne aktualizacje nie są jeszcze udostępnione. Nową paczkę instaluj ręcznie; zapis pozostaje na tym komputerze.|This is a local Release. Automatic updates are not available yet. Install new packages manually; your save stays on this computer.|Dies ist ein lokaler Release. Automatische Updates sind noch nicht verfügbar. Installiere neue Pakete manuell; dein Spielstand bleibt auf diesem Computer.
 `);
  const ranges={scale:[.5,1.5,1],particles:[0,1,1],shake:[0,1,.6],master:[0,1,.55],music:[0,1,.25],sfx:[0,1,.65],hudOpacity:[.65,1,.94],flash3:[0,1,1],damageSize3:[.8,1.8,1],playerFX3:[.15,1,.85],statusSize3:[.75,2,1]};
  const defaults={auto:true,autoAim:true,numbers:true,hudLayout:'auto',hudSize:'medium',hudAlign:'center',lowHP:'subtle',weaponStats:true,enemyOutline3:true,altThreat3:false,skillAim3:false,pauseChoices3:true,threat3:'standard',history3:true,cues3:true,lowFX:false,language:'en',bindings:{}};
@@ -7301,8 +7302,8 @@ To lokalne wydanie Release Candidate. Automatyczne aktualizacje nie są jeszcze 
   A.Locale?.refresh();
   if(saved){const target=[...panel.querySelectorAll('[data-action],[data-setting]')].find(e=>saved.setting?e.dataset.setting===saved.setting:saved.action&&e.dataset.action===saved.action&&e.dataset.value===saved.value);target?.focus({preventScroll:true});panel.scrollTop=saved.panel;this.overlay.scrollTop=saved.overlay;window.scrollTo(saved.x,saved.y);}
  };
- const menu=P.menu;P.menu=function(...args){menu.apply(this,args);this.overlay.querySelector('main')?.insertAdjacentHTML('beforeend','<p class="hint">AEREN '+B.gameVersion+' · Release Candidate</p>');};
- const action=P.action;P.action=function(id,value){if(id==='updates'){this.panel('Aktualizacje','AEREN '+B.gameVersion,'<p>To lokalne wydanie Release Candidate. Automatyczne aktualizacje nie są jeszcze udostępnione. Nową paczkę instaluj ręcznie; zapis pozostaje na tym komputerze.</p>','menu');return;}if(id==='defaults100'){S.data.settings={...defaults,bindings:{}};S.write();A.Locale?.set('en');this.settings(this.settingsBack23||'menu');return;}if(id==='backup100'){K.download('AEREN-profil.json',K.capture());return;}if(id==='diagnostics100'){K.download('AEREN-diagnostyka.json',A.diagnostic100());return;}return action.call(this,id,value);};
+ const menu=P.menu;P.menu=function(...args){menu.apply(this,args);this.overlay.querySelector('main')?.insertAdjacentHTML('beforeend','<p class="hint">AEREN '+B.gameVersion+' · Release</p>');};
+ const action=P.action;P.action=function(id,value){if(id==='updates'){this.panel('Aktualizacje','AEREN '+B.gameVersion,'<p>To lokalne wydanie Release. Automatyczne aktualizacje nie są jeszcze udostępnione. Nową paczkę instaluj ręcznie; zapis pozostaje na tym komputerze.</p>','menu');return;}if(id==='defaults100'){S.data.settings={...defaults,bindings:{}};S.write();A.Locale?.set('en');this.settings(this.settingsBack23||'menu');return;}if(id==='backup100'){K.download('AEREN-profil.json',K.capture());return;}if(id==='diagnostics100'){K.download('AEREN-diagnostyka.json',A.diagnostic100());return;}return action.call(this,id,value);};
  let lastError=null;
  A.diagnostic100=()=>({...B,platform:navigator.platform,viewport:{width:innerWidth,height:innerHeight},state:A.game?.state||'startup',error:lastError,modules:'runtime',date:new Date().toISOString()});
  A.reportError100=function(error){lastError={type:String(error?.name||'Error').slice(0,50),code:'AEREN-RUNTIME'};if(A.game){if(A.game.state==='playing')A.game.pause();A.game.ui.toast('Wstrzymano grę z powodu błędu','Zapisz raport diagnostyczny w ustawieniach.');}};

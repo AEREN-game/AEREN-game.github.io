@@ -31,6 +31,7 @@ window.AEREN_RELEASE={gameVersion:'1.0.0',saveSchemaVersion:3,contentVersion:'20
  try{
   const pending=localStorage.getItem(journal);if(pending){const data=JSON.parse(pending);validate(data);restore(data);localStorage.removeItem(journal);}
   const original=capture();validate(original);if(keys.some(k=>original[k]!==null)&&!localStorage.getItem(backup))localStorage.setItem(backup,JSON.stringify(original));
-  const script=document.createElement('script');script.src=new URL('runtime.js',document.currentScript.src).href;script.onerror=recovery;document.body.append(script);
+  const script=document.createElement('script');script.src=new URL('play-js-runtime.js',document.currentScript.src).href;script.onerror=recovery;document.body.append(script);
  }catch(e){recovery();}
 })();
+

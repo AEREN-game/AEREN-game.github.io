@@ -1,0 +1,3 @@
+AEREN 1.0.0 Release Candidate 3
+Build: 2026-10-13-rc3-en
+English distribution; existing save language preferences are preserved.
